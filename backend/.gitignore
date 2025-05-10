@@ -1,7 +1,7 @@
 # compiled output
-dist
-node_modules
-build
+/dist
+/node_modules
+/build
 
 # Logs
 logs
@@ -16,16 +16,16 @@ lerna-debug.log*
 .DS_Store
 
 # Tests
-coverage
-.nyc_output
+/coverage
+/.nyc_output
 
 # IDEs and editors
-.idea
+/.idea
 .project
 .classpath
-.c9
+.c9/
 *.launch
-.settings
+.settings/
 *.sublime-workspace
 
 # IDE - VSCode
@@ -43,8 +43,8 @@ coverage
 .env.local
 
 # temp directory
-temp
-tmp
+.temp
+.tmp
 
 # Runtime data
 pids
@@ -52,5 +52,5 @@ pids
 *.seed
 *.pid.lock
 
-# Diagnostic reports
-report.*.json
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
