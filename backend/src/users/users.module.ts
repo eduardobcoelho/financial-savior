@@ -4,6 +4,7 @@ import { UserRepository } from './repository/user.repository';
 import { CreateUserService } from './service/create-user/create-user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './entity/user.entity';
+import { FindUserByEmailService } from './service/find-user-by-email/find-user-by-email.service';
 
 const repositoryProviders = [
   {
@@ -16,6 +17,10 @@ const serviceProviders = [
   {
     provide: 'ICreateUserService',
     useClass: CreateUserService,
+  },
+  {
+    provide: 'IFindUserByEmailService',
+    useClass: FindUserByEmailService,
   },
 ];
 

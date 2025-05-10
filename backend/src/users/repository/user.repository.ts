@@ -6,6 +6,7 @@ import { UserEntity } from '../entity/user.entity';
 
 export interface IUserRepository {
   create: (data: CreateUserDto) => Promise<UserEntity>;
+  findByEmail: (email: string) => Promise<UserEntity | null>;
 }
 
 @Injectable()
@@ -18,5 +19,11 @@ export class UserRepository implements IUserRepository {
   async create(data: CreateUserDto) {
     const user = this.repository.create(data);
     return await this.repository.save(user);
+  }
+
+  async findByEmail(email: string) {
+    return await this.repository.findOneBy({
+      email,
+    });
   }
 }
