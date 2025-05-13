@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   Entity,
   Column,
@@ -19,13 +20,17 @@ export class UserEntity {
   password: string;
 
   @Column()
+  @Type(() => Date)
   @CreateDateColumn()
   createdAt: Date;
 
   @Column()
+  @Type(() => Date)
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @Column()
   @DeleteDateColumn({ nullable: true })
+  @Type(() => Date)
   deletedAt?: Date;
 }
