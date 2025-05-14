@@ -7,11 +7,19 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { GenerateJwtTokenService } from './service/generate-jwt-token/generate-jwt-token.service';
 import { CreateUserTokenService } from './service/create-user-token/create-user-token.service';
+import { UsersModule } from 'src/users/users.module';
+import { LoginService } from './service/login/login.service';
+import { AuthUserRepository } from './repository/auth-user.repository';
+import { UserEntity } from './entity/user.entity';
 
 const repositoryProviders = [
   {
     provide: 'IUserTokenRepository',
     useClass: UserTokenRepository,
+  },
+  {
+    provide: 'IAuthUserRepository',
+    useClass: AuthUserRepository,
   },
 ];
 
@@ -27,11 +35,16 @@ const serviceProviders = [
     provide: 'ICreateUserTokenService',
     useClass: CreateUserTokenService,
   },
+  // LOGIN
+  {
+    provide: 'ILoginService',
+    useClass: LoginService,
+  },
 ];
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserTokenEntity]),
+    TypeOrmModule.forFeature([UserTokenEntity, UserEntity]),
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
@@ -41,6 +54,7 @@ const serviceProviders = [
         },
       }),
     }),
+    UsersModule,
   ],
   controllers: [AuthController],
   providers: [...repositoryProviders, ...serviceProviders],

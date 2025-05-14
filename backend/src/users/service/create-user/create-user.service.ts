@@ -4,7 +4,7 @@ import { UserEntity } from 'src/users/entity/user.entity';
 import { IUserRepository } from 'src/users/repository/user.repository';
 import { FindUserByEmailService } from '../find-user-by-email/find-user-by-email.service';
 import { ValidationMessages } from 'src/users/enum';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 
 export interface ICreateUserService {
   exec: (data: CreateUserDto) => Promise<Omit<UserEntity, 'password'>>;
