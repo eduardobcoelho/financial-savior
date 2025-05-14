@@ -5,12 +5,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserTokenEntity } from './entity/user-token.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { GenerateJwtTokenService } from './service/generate-jwt-token/generate-jwt-token.service';
 import { CreateUserTokenService } from './service/create-user-token/create-user-token.service';
 import { UsersModule } from 'src/users/users.module';
 import { LoginService } from './service/login/login.service';
 import { AuthUserRepository } from './repository/auth-user.repository';
 import { UserEntity } from './entity/user.entity';
+import { GenerateJwtRefreshTokenService } from './service/generate-jwt-refresh-token/generate-jwt-refresh-token.service';
 
 const repositoryProviders = [
   {
@@ -26,8 +26,8 @@ const repositoryProviders = [
 const serviceProviders = [
   // JWT
   {
-    provide: 'IGenerateJwtTokenService',
-    useClass: GenerateJwtTokenService,
+    provide: 'IGenerateJwtRefreshTokenService',
+    useClass: GenerateJwtRefreshTokenService,
   },
   // ...
   // user_tokens
