@@ -18,7 +18,7 @@ export class AuthUserRepository implements IAuthUserRepository {
     const user = await this.repository
       .createQueryBuilder('user')
       .addSelect('user.password')
-      .where('user.id = ;userId', { userId })
+      .where('user.id = :id', { id: userId })
       .getOne();
 
     return user?.password || null;

@@ -26,12 +26,14 @@ export class LoginService implements ILoginService {
         user?.id as number,
       );
 
-      bcrypt.compare(data.password, password as string, (err, result) => {
-        if (!result || err)
-          throw new BadRequestException('Email e/ou senha inválido(s)');
+      const validPassword = await bcrypt.compare(
+        data.password,
+        password as string,
+      );
 
-        return {};
-      });
+      if (!validPassword) {
+        throw new BadRequestException('Email e/ou senha inválido(s)');
+      }
     } catch {
       throw new BadRequestException('Email e/ou senha inválido(s)');
     }
