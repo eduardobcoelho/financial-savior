@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 
 export interface IGenerateJwtRefreshTokenServiceData {
   userId: number;
-  email: string;
+  userEmail: string;
 }
 
 export interface IGenerateJwtRefreshTokenService {
@@ -16,8 +16,8 @@ export class GenerateJwtRefreshTokenService
 {
   constructor(private jwtService: JwtService) {}
 
-  async exec({ userId, email }: IGenerateJwtRefreshTokenServiceData) {
-    const payload = { sub: userId, email };
+  async exec({ userId, userEmail }: IGenerateJwtRefreshTokenServiceData) {
+    const payload = { sub: userId, email: userEmail };
     return await this.jwtService.signAsync(payload);
   }
 }

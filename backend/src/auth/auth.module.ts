@@ -11,6 +11,7 @@ import { LoginService } from './service/login/login.service';
 import { AuthUserRepository } from './repository/auth-user.repository';
 import { UserEntity } from './entity/user.entity';
 import { GenerateJwtRefreshTokenService } from './service/generate-jwt-refresh-token/generate-jwt-refresh-token.service';
+import { GenerateJwtTokenService } from './service/generate-jwt-token/generate-jwt-token.service';
 
 const repositoryProviders = [
   {
@@ -28,6 +29,10 @@ const serviceProviders = [
   {
     provide: 'IGenerateJwtRefreshTokenService',
     useClass: GenerateJwtRefreshTokenService,
+  },
+  {
+    provide: 'IGenerateJwtTokenService',
+    useClass: GenerateJwtTokenService,
   },
   // ...
   // user_tokens

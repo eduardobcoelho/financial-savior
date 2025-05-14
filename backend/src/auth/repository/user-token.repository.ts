@@ -20,13 +20,14 @@ export class UserTokenRepository implements IUserTokenRepository {
     private readonly repository: Repository<UserTokenEntity>,
   ) {}
 
-  async create(data: CreateUserTokenData) {
+  async create({ userId, refreshToken }: CreateUserTokenData) {
     const expiresAt = addHours(new Date(), 1);
 
     const userToken = this.repository.create({
-      ...data,
-      revoked: false,
+      userId,
+      refreshToken,
       expiresAt,
+      revoked: false,
     });
 
     return await this.repository.save(userToken);
