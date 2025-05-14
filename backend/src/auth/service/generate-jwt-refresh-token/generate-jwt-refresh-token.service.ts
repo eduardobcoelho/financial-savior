@@ -17,7 +17,7 @@ export class GenerateJwtRefreshTokenService
   constructor(private jwtService: JwtService) {}
 
   async exec({ userId, userEmail }: IGenerateJwtRefreshTokenServiceData) {
-    const payload = { sub: userId, email: userEmail };
+    const payload = { sub: userId, email: userEmail, createdAt: new Date() };
     return await this.jwtService.signAsync(payload);
   }
 }

@@ -65,14 +65,14 @@ export class LoginService implements ILoginService {
         userEmail,
       });
 
-      return Promise.resolve({
+      return {
         token,
         refreshToken,
         user: {
           id: userId,
           email: userEmail,
         },
-      });
+      };
     } catch {
       throw new BadRequestException(ValidationMessages.loginInvalid);
     }
