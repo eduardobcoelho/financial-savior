@@ -5,8 +5,6 @@ import { UserTokenEntity } from 'src/auth/entity/user-token.entity';
 export interface ICreateUserTokenData {
   userId: number;
   refreshToken: string;
-  revoked: boolean;
-  expiresAt: Date;
 }
 
 export interface ICreateUserTokenService {

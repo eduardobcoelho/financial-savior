@@ -2,12 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserTokenEntity } from '../entity/user-token.entity';
+import { addHours } from 'date-fns';
 
 interface CreateUserTokenData {
   userId: number;
   refreshToken: string;
-  revoked: boolean;
-  expiresAt: Date;
 }
 
 export interface IUserTokenRepository {
@@ -22,7 +21,14 @@ export class UserTokenRepository implements IUserTokenRepository {
   ) {}
 
   async create(data: CreateUserTokenData) {
-    const userToken = this.repository.create(data);
+    const expiresAt = addHours(new Date(), 1);
+
+    const userToken = this.repository.create({
+      ...data,
+      revoked: false,
+      expiresAt,
+    });
+
     return await this.repository.save(userToken);
   }
 }
