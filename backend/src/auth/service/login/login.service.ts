@@ -55,7 +55,7 @@ export class LoginService implements ILoginService {
       });
 
       const userTokenRegister = await this.createUserTokenService.exec({
-        userId: user?.id as number,
+        userId,
         refreshToken,
       });
 
