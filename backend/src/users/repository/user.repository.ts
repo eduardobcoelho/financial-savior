@@ -6,7 +6,7 @@ import { UserEntity } from '../entity/user.entity';
 
 export interface IUserRepository {
   create: (data: CreateUserDto) => Promise<UserEntity>;
-  findByEmail: (email: string) => Promise<UserEntity | null>;
+  findByEmail: (email: string) => Promise<Omit<UserEntity, 'password'> | null>;
 }
 
 @Injectable()

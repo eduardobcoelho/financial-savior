@@ -28,5 +28,11 @@ const serviceProviders = [
   imports: [TypeOrmModule.forFeature([UserEntity])],
   controllers: [UsersController],
   providers: [...repositoryProviders, ...serviceProviders],
+  exports: [
+    {
+      provide: 'IFindUserByEmailService',
+      useClass: FindUserByEmailService,
+    },
+  ],
 })
 export class UsersModule {}

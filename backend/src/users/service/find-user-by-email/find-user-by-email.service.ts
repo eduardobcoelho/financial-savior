@@ -4,7 +4,7 @@ import { ValidationMessages } from 'src/users/enum';
 import { IUserRepository } from 'src/users/repository/user.repository';
 
 export interface IFindUserByEmailService {
-  exec: (email: string) => Promise<UserEntity | null>;
+  exec: (email: string) => Promise<Omit<UserEntity, 'password'> | null>;
 }
 
 @Injectable()
