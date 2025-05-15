@@ -1,8 +1,18 @@
-import { Controller, HttpCode, Inject, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  Inject,
+  Post,
+  UseGuards,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ICreatePlanningService } from '../service/create-planning/create-planning.service';
 import { CreatePlanningDto } from '../dto/create-planning.dto';
+import { AuthJwtTokenGuard } from 'src/auth/guard/jwt-token/jwt-token.guard';
 
 @Controller('plannings')
+@UseGuards(AuthJwtTokenGuard)
 export class PlanningsController {
   constructor(
     @Inject('ICreatePlanningService')
@@ -11,7 +21,9 @@ export class PlanningsController {
 
   @Post()
   @HttpCode(201)
-  async create(data: CreatePlanningDto) {
+  async create(
+    @Body(new ValidationPipe({ transform: true })) data: CreatePlanningDto,
+  ) {
     return await this.createPlanningService.exec(data);
   }
 }

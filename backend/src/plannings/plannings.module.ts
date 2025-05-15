@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlanningEntity } from './entity/planning.entity';
 import { PlanningRepository } from './repository/planning.repository';
 import { CreatePlanningService } from './service/create-planning/create-planning.service';
+import { AuthModule } from 'src/auth/auth.module';
 
 const repositoryProviders = [
   {
@@ -20,7 +21,7 @@ const serviceProviders = [
 ];
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PlanningEntity])],
+  imports: [TypeOrmModule.forFeature([PlanningEntity]), AuthModule],
   controllers: [PlanningsController],
   providers: [...repositoryProviders, ...serviceProviders],
 })

@@ -12,6 +12,7 @@ import { AuthUserRepository } from './repository/auth-user.repository';
 import { UserEntity } from './entity/user.entity';
 import { GenerateJwtRefreshTokenService } from './service/generate-jwt-refresh-token/generate-jwt-refresh-token.service';
 import { GenerateJwtTokenService } from './service/generate-jwt-token/generate-jwt-token.service';
+import { AuthJwtTokenGuard } from './guard/jwt-token/jwt-token.guard';
 
 const repositoryProviders = [
   {
@@ -47,21 +48,28 @@ const serviceProviders = [
   },
 ];
 
+const guardProviders = [AuthJwtTokenGuard];
+
+const jwtModuleConfig = JwtModule.registerAsync({
+  inject: [ConfigService],
+  useFactory: (config: ConfigService) => ({
+    secret: config.get<string>('NEST_JWT_SECRET'),
+    signOptions: {
+      expiresIn: config.get<string>('NEST_JWT_EXPIRES') || '1h',
+    },
+  }),
+});
+
+const moduleExports = [AuthJwtTokenGuard, jwtModuleConfig];
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserTokenEntity, UserEntity]),
-    JwtModule.registerAsync({
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        secret: config.get<string>('NEST_JWT_SECRET'),
-        signOptions: {
-          expiresIn: config.get<string>('NEST_JWT_EXPIRES') || '1h',
-        },
-      }),
-    }),
+    jwtModuleConfig,
     UsersModule,
   ],
   controllers: [AuthController],
-  providers: [...repositoryProviders, ...serviceProviders],
+  providers: [...repositoryProviders, ...serviceProviders, ...guardProviders],
+  exports: [...moduleExports],
 })
 export class AuthModule {}
