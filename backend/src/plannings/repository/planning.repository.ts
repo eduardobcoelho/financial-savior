@@ -4,7 +4,7 @@ import { CreatePlanningDto } from '../dto/create-planning.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-interface IPlanningRepository {
+export interface IPlanningRepository {
   create: (data: CreatePlanningDto) => Promise<PlanningEntity>;
 }
 

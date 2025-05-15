@@ -3,6 +3,7 @@ import { PlanningsController } from './controller/plannings.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlanningEntity } from './entity/planning.entity';
 import { PlanningRepository } from './repository/planning.repository';
+import { CreatePlanningService } from './service/create-planning/create-planning.service';
 
 const repositoryProviders = [
   {
@@ -11,20 +12,16 @@ const repositoryProviders = [
   },
 ];
 
-// const serviceProviders = [
-//   {
-//     provide: 'ICreateUserService',
-//     useClass: CreateUserService,
-//   },
-//   {
-//     provide: 'IFindUserByEmailService',
-//     useClass: FindUserByEmailService,
-//   },
-// ];
+const serviceProviders = [
+  {
+    provide: 'ICreatePlanningService',
+    useClass: CreatePlanningService,
+  },
+];
 
 @Module({
   imports: [TypeOrmModule.forFeature([PlanningEntity])],
   controllers: [PlanningsController],
-  providers: [...repositoryProviders],
+  providers: [...repositoryProviders, ...serviceProviders],
 })
 export class PlanningsModule {}
