@@ -4,6 +4,7 @@ import {
   HttpCode,
   Inject,
   Post,
+  Query,
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user-dto';
@@ -19,8 +20,9 @@ export class UsersController {
   @Post()
   @HttpCode(201)
   async create(
+    @Query('password') password: string,
     @Body(new ValidationPipe({ transform: true })) input: CreateUserDto,
   ) {
-    return await this.createUserService.exec(input);
+    return await this.createUserService.exec(password, input);
   }
 }

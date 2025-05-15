@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dto/create-user-dto';
 import { UserEntity } from 'src/users/entity/user.entity';
 import { IUserRepository } from 'src/users/repository/user.repository';
@@ -7,7 +12,10 @@ import { ValidationMessages } from 'src/users/enum';
 import * as bcrypt from 'bcrypt';
 
 export interface ICreateUserService {
-  exec: (data: CreateUserDto) => Promise<Omit<UserEntity, 'password'>>;
+  exec: (
+    authorizePassword: string,
+    data: CreateUserDto,
+  ) => Promise<Omit<UserEntity, 'password'>>;
 }
 
 @Injectable()
@@ -20,7 +28,11 @@ export class CreateUserService implements ICreateUserService {
     private readonly findUserByEmailService: FindUserByEmailService,
   ) {}
 
-  async exec(data: CreateUserDto) {
+  async exec(authorizePassword: string, data: CreateUserDto) {
+    if (authorizePassword !== process.env.NEST_CREATE_USER_PASSWORD) {
+      throw new UnauthorizedException();
+    }
+
     let user: Omit<UserEntity, 'password'> | null = null;
 
     try {
