@@ -49,18 +49,15 @@ export class LoginService implements ILoginService {
         throw new BadRequestException(ValidationMessages.loginInvalid);
       }
 
-      const refreshToken = await this.generateJwtRefreshTokenService.exec({
+      const userTokenRegister = await this.createUserTokenService.exec(userId);
+
+      const token = await this.generateJwtTokenService.exec({
+        userTokenId: userTokenRegister.id,
         userId,
         userEmail,
       });
 
-      const userTokenRegister = await this.createUserTokenService.exec({
-        userId,
-        refreshToken,
-      });
-
-      const token = await this.generateJwtTokenService.exec({
-        userTokenId: userTokenRegister.id,
+      const refreshToken = await this.generateJwtRefreshTokenService.exec({
         userId,
         userEmail,
       });

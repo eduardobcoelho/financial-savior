@@ -15,14 +15,7 @@ export class UserTokenEntity {
   userId: number;
 
   @Column()
-  refreshToken: string;
-
-  @Column()
   revoked: boolean;
-
-  @Column()
-  @Type(() => Date)
-  expiresAt: Date;
 
   @Column()
   @Type(() => Date)
