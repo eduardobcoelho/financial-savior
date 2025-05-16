@@ -5,6 +5,7 @@ import { PlanningEntity } from './entity/planning.entity';
 import { PlanningRepository } from './repository/planning.repository';
 import { CreatePlanningService } from './service/create-planning/create-planning.service';
 import { AuthModule } from 'src/auth/auth.module';
+import { UsersModule } from 'src/users/users.module';
 
 const repositoryProviders = [
   {
@@ -21,7 +22,11 @@ const serviceProviders = [
 ];
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PlanningEntity]), AuthModule],
+  imports: [
+    TypeOrmModule.forFeature([PlanningEntity]),
+    AuthModule,
+    UsersModule,
+  ],
   controllers: [PlanningsController],
   providers: [...repositoryProviders, ...serviceProviders],
 })
