@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { JwtService } from '@nestjs/jwt';
 import { TokenDto } from 'src/auth/dto/token-dto';
 import { IFindUserByEmailService } from 'src/users/service/find-user-by-email/find-user-by-email.service';
+import { IFindUserTokenService } from 'src/auth/service/find-user-token/find-user-token.service';
 
 interface AuthRequestConfig {
   headers: {
@@ -29,6 +30,9 @@ export class AuthJwtTokenGuard implements CanActivate {
 
     @Inject('IFindUserByEmailService')
     private readonly findUserByEmailService: IFindUserByEmailService,
+
+    @Inject('IFindUserTokenService')
+    private readonly findUserTokenService: IFindUserTokenService,
   ) {}
 
   async validateRequest(ctx: ExecutionContext) {
@@ -40,11 +44,22 @@ export class AuthJwtTokenGuard implements CanActivate {
     }
 
     try {
-      const { sub: userId, email } =
-        await this.jwtService.verifyAsync<TokenDto>(token);
+      const {
+        userTokenId,
+        sub: userId,
+        email,
+      } = await this.jwtService.verifyAsync<TokenDto>(token);
+
+      const userToken = await this.findUserTokenService.exec(userTokenId);
+      const sameUserIdOnUserToken = userToken?.userId === userId;
+      if (userToken?.revoked || !sameUserIdOnUserToken) {
+        throw new UnauthorizedException();
+      }
 
       const user = await this.findUserByEmailService.exec(email);
-      if (userId !== user?.id) throw new UnauthorizedException();
+      if (userId !== user?.id) {
+        throw new UnauthorizedException();
+      }
     } catch {
       throw new UnauthorizedException();
     }

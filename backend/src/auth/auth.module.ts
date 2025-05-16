@@ -65,7 +65,14 @@ const jwtModuleConfig = JwtModule.registerAsync({
   }),
 });
 
-const moduleExports = [AuthJwtTokenGuard, jwtModuleConfig];
+const moduleExports = [
+  AuthJwtTokenGuard,
+  jwtModuleConfig,
+  {
+    provide: 'IFindUserTokenService',
+    useClass: FindUserTokenService,
+  },
+];
 
 @Module({
   imports: [
