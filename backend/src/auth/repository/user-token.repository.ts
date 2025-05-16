@@ -5,6 +5,7 @@ import { UserTokenEntity } from '../entity/user-token.entity';
 
 export interface IUserTokenRepository {
   create: (userId: number) => Promise<UserTokenEntity>;
+  find: (userTokenId: number) => Promise<UserTokenEntity | null>;
 }
 
 @Injectable()
@@ -21,5 +22,11 @@ export class UserTokenRepository implements IUserTokenRepository {
     });
 
     return await this.repository.save(userToken);
+  }
+
+  async find(userTokenId: number) {
+    return await this.repository.findOneBy({
+      id: userTokenId,
+    });
   }
 }

@@ -13,6 +13,7 @@ import { UserEntity } from './entity/user.entity';
 import { GenerateJwtRefreshTokenService } from './service/generate-jwt-refresh-token/generate-jwt-refresh-token.service';
 import { GenerateJwtTokenService } from './service/generate-jwt-token/generate-jwt-token.service';
 import { AuthJwtTokenGuard } from './guard/jwt-token/jwt-token.guard';
+import { FindUserTokenService } from './service/find-user-token/find-user-token.service';
 
 const repositoryProviders = [
   {
@@ -40,6 +41,10 @@ const serviceProviders = [
   {
     provide: 'ICreateUserTokenService',
     useClass: CreateUserTokenService,
+  },
+  {
+    provide: 'IFindUserTokenService',
+    useClass: FindUserTokenService,
   },
   // LOGIN
   {
