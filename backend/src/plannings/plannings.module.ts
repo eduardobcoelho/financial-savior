@@ -6,6 +6,7 @@ import { PlanningRepository } from './repository/planning.repository';
 import { CreatePlanningService } from './service/create-planning/create-planning.service';
 import { AuthModule } from 'src/auth/auth.module';
 import { UsersModule } from 'src/users/users.module';
+import { DeletePlanningService } from './service/delete-planning/delete-planning.service';
 
 const repositoryProviders = [
   {
@@ -18,6 +19,10 @@ const serviceProviders = [
   {
     provide: 'ICreatePlanningService',
     useClass: CreatePlanningService,
+  },
+  {
+    provide: 'IDeletePlanningService',
+    useClass: DeletePlanningService,
   },
 ];
 

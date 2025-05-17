@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 export interface IPlanningRepository {
   create: (data: CreatePlanningDto) => Promise<PlanningEntity>;
+  delete: (id: number) => Promise<void>;
 }
 
 @Injectable()
@@ -18,5 +19,9 @@ export class PlanningRepository implements IPlanningRepository {
   async create(data: CreatePlanningDto) {
     const planning = this.repository.create(data);
     return await this.repository.save(planning);
+  }
+
+  async delete(id: number) {
+    await this.repository.softDelete(id);
   }
 }
