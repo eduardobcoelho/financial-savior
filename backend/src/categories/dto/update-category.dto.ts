@@ -1,10 +1,9 @@
 import { IsOptional, IsString, MaxLength } from 'class-validator';
 import { ValidationMessages } from '../enum';
 
-export class CreateCategoryDto {
-  @IsString({
-    message: ValidationMessages.nameRequired,
-  })
+export class UpdateCategoryDto {
+  @IsString()
+  @IsOptional()
   @MaxLength(50, {
     message: ValidationMessages.nameMaxLength,
   })
@@ -12,12 +11,13 @@ export class CreateCategoryDto {
 
   @IsString()
   @IsOptional()
-  @MaxLength(50, {
+  @MaxLength(1000, {
     message: ValidationMessages.descriptionMaxLength,
   })
   description: string;
 
-  @IsString({ message: ValidationMessages.colorRequired })
+  @IsString()
+  @IsOptional()
   @MaxLength(7, {
     message: ValidationMessages.colorMaxLength,
   })
