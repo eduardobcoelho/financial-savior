@@ -16,7 +16,7 @@ export class CategoryEntity {
   @Column({ length: 100 })
   name: string;
 
-  @Column({ length: 1000 })
+  @Column({ length: 1000, nullable: true })
   description: string;
 
   @Column({ length: 7 })
