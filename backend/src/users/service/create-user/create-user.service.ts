@@ -47,7 +47,7 @@ export class CreateUserService implements ICreateUserService {
 
     return await this.userRepository.create({
       ...data,
-      password: passwordBcrypted as string,
+      password: passwordBcrypted,
     });
   }
 }
