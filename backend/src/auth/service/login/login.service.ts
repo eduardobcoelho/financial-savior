@@ -8,6 +8,7 @@ import { ICreateUserTokenService } from '../create-user-token/create-user-token.
 import { IGenerateJwtRefreshTokenService } from '../generate-jwt-refresh-token/generate-jwt-refresh-token.service';
 import { GenerateJwtTokenService } from '../generate-jwt-token/generate-jwt-token.service';
 import { LoginResponseDto } from 'src/auth/dto/login-response.dto';
+import { IUserTokenRepository } from 'src/auth/repository/user-token.repository';
 
 export interface ILoginService {
   exec: (data: LoginDto) => Promise<LoginResponseDto>;
@@ -18,6 +19,9 @@ export class LoginService implements ILoginService {
   constructor(
     @Inject('IAuthUserRepository')
     private readonly authUserRepository: IAuthUserRepository,
+
+    @Inject('IUserTokenRepository')
+    private readonly userTokenRepository: IUserTokenRepository,
 
     @Inject('IFindUserByEmailService')
     private findUserByEmailService: IFindUserByEmailService,
@@ -48,6 +52,8 @@ export class LoginService implements ILoginService {
       if (!validPassword || !password) {
         throw new BadRequestException(ValidationMessages.loginInvalid);
       }
+
+      await this.userTokenRepository.invalidateValidUserTokens(userId);
 
       const userTokenRegister = await this.createUserTokenService.exec(userId);
 
