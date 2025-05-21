@@ -6,4 +6,6 @@ export enum ValidationMessages {
 
   colorRequired = 'Cor é obrigatório',
   colorMaxLength = 'A cor deve ser um código hexadecimal válido',
+
+  categoryNotFound = 'Categoria não encontrada',
 }
