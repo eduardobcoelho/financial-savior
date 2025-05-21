@@ -6,9 +6,9 @@ import { ValidationMessages } from 'src/auth/enum';
 import * as bcrypt from 'bcrypt';
 import { ICreateUserTokenService } from '../create-user-token/create-user-token.service';
 import { IGenerateJwtRefreshTokenService } from '../generate-jwt-refresh-token/generate-jwt-refresh-token.service';
-import { GenerateJwtTokenService } from '../generate-jwt-token/generate-jwt-token.service';
+import { IGenerateJwtTokenService } from '../generate-jwt-token/generate-jwt-token.service';
 import { LoginResponseDto } from 'src/auth/dto/login-response.dto';
-import { IUserTokenRepository } from 'src/auth/repository/user-token.repository';
+import { IInvalidateUserTokensService } from '../invalidate-user-tokens/invalidate-user-tokens.service';
 
 export interface ILoginService {
   exec: (data: LoginDto) => Promise<LoginResponseDto>;
@@ -20,9 +20,6 @@ export class LoginService implements ILoginService {
     @Inject('IAuthUserRepository')
     private readonly authUserRepository: IAuthUserRepository,
 
-    @Inject('IUserTokenRepository')
-    private readonly userTokenRepository: IUserTokenRepository,
-
     @Inject('IFindUserByEmailService')
     private findUserByEmailService: IFindUserByEmailService,
 
@@ -33,7 +30,10 @@ export class LoginService implements ILoginService {
     private readonly createUserTokenService: ICreateUserTokenService,
 
     @Inject('IGenerateJwtTokenService')
-    private readonly generateJwtTokenService: GenerateJwtTokenService,
+    private readonly generateJwtTokenService: IGenerateJwtTokenService,
+
+    @Inject('IInvalidateUserTokensService')
+    private readonly invalidateUserTokensService: IInvalidateUserTokensService,
   ) {}
 
   async exec(data: LoginDto) {
@@ -53,7 +53,7 @@ export class LoginService implements ILoginService {
         throw new BadRequestException(ValidationMessages.loginInvalid);
       }
 
-      await this.userTokenRepository.invalidateValidUserTokens(userId);
+      await this.invalidateUserTokensService.exec(userId);
 
       const userTokenRegister = await this.createUserTokenService.exec(userId);
 

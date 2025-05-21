@@ -6,7 +6,7 @@ import { UserTokenEntity } from '../entity/user-token.entity';
 export interface IUserTokenRepository {
   create: (userId: number) => Promise<UserTokenEntity>;
   find: (userTokenId: number) => Promise<UserTokenEntity | null>;
-  invalidateValidUserTokens: (userId: number) => Promise<void>;
+  invalidateUserTokens: (userId: number) => Promise<void>;
 }
 
 @Injectable()
@@ -31,7 +31,7 @@ export class UserTokenRepository implements IUserTokenRepository {
     });
   }
 
-  async invalidateValidUserTokens(userId: number) {
+  async invalidateUserTokens(userId: number) {
     const tokenExpireTimeHours = Number(
       `${process.env.NEST_JWT_EXPIRES || '1h'}`.replace('h', ''),
     );

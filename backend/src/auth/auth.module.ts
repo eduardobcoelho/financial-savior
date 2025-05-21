@@ -14,6 +14,7 @@ import { GenerateJwtRefreshTokenService } from './service/generate-jwt-refresh-t
 import { GenerateJwtTokenService } from './service/generate-jwt-token/generate-jwt-token.service';
 import { AuthJwtTokenGuard } from './guard/jwt-token/jwt-token.guard';
 import { FindUserTokenService } from './service/find-user-token/find-user-token.service';
+import { InvalidateUserTokensService } from './service/invalidate-user-tokens/invalidate-user-tokens.service';
 
 const repositoryProviders = [
   {
@@ -45,6 +46,10 @@ const serviceProviders = [
   {
     provide: 'IFindUserTokenService',
     useClass: FindUserTokenService,
+  },
+  {
+    provide: 'IInvalidateUserTokensService',
+    useClass: InvalidateUserTokensService,
   },
   // LOGIN
   {
