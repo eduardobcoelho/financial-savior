@@ -4,6 +4,7 @@ import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { PlanningsModule } from './plannings/plannings.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { PlanningsModule } from './plannings/plannings.module';
     UsersModule,
     AuthModule,
     PlanningsModule,
+    CategoriesModule,
   ],
 })
 export class AppModule {}
