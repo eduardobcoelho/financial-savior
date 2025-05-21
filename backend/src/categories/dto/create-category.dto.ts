@@ -12,7 +12,7 @@ export class CreateCategoryDto {
 
   @IsString()
   @IsOptional()
-  @MaxLength(50, {
+  @MaxLength(1000, {
     message: ValidationMessages.descriptionMaxLength,
   })
   description: string;
