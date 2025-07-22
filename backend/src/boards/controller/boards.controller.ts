@@ -12,8 +12,8 @@ import {
 } from '@nestjs/common';
 import { AuthJwtTokenGuard } from 'src/auth/guard/jwt-token/jwt-token.guard';
 import { CreateBoardDto } from '../dto/create-board.dto';
-import { ICreateBoardService } from '../service/create-planning/create-planning.service';
-import { IDeleteBoardService } from '../service/delete-planning/delete-planning.service';
+import { ICreateBoardService } from '../service/create-board/create-board.service';
+import { IDeleteBoardService } from '../service/delete-board/delete-board.service';
 
 @Controller('boards')
 @UseGuards(AuthJwtTokenGuard)

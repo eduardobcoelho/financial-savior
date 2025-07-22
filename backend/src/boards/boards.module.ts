@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
 import { UsersModule } from 'src/users/users.module';
-import { DeleteBoardService } from './service/delete-planning/delete-planning.service';
+import { DeleteBoardService } from './service/delete-board/delete-board.service';
 import { BoardRepository } from './repository/board.repository';
 import { BoardEntity } from './entity/board.entity';
 import { BoardsController } from './controller/boards.controller';
-import { CreateBoardService } from './service/create-planning/create-planning.service';
+import { CreateBoardService } from './service/create-board/create-board.service';
 
 const repositoryProviders = [
   {
