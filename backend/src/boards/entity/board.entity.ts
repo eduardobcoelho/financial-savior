@@ -8,8 +8,8 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'plannings', schema: 'PLANNING' })
-export class PlanningEntity {
+@Entity({ name: 'boards', schema: 'PLANNING' })
+export class BoardEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

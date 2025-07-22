@@ -1,7 +1,7 @@
 import { IsString, MaxLength } from 'class-validator';
 import { ValidationMessages } from '../enum';
 
-export class CreatePlanningDto {
+export class CreateBoardDto {
   @IsString({
     message: ValidationMessages.nameRequired,
   })
