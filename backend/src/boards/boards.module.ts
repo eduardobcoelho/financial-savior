@@ -7,6 +7,8 @@ import { BoardRepository } from './repository/board.repository';
 import { BoardEntity } from './entity/board.entity';
 import { BoardsController } from './controller/boards.controller';
 import { CreateBoardService } from './service/create-board/create-board.service';
+import { FindBoardService } from './service/find-board/find-board.service';
+import { UpdateBoardService } from './service/update-board/update-board.service';
 
 const repositoryProviders = [
   {
@@ -23,6 +25,14 @@ const serviceProviders = [
   {
     provide: 'IDeleteBoardService',
     useClass: DeleteBoardService,
+  },
+  {
+    provide: 'IFindBoardService',
+    useClass: FindBoardService,
+  },
+  {
+    provide: 'IUpdateBoardService',
+    useClass: UpdateBoardService,
   },
 ];
 
