@@ -7,6 +7,12 @@ describe('AuthController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
+      providers: [
+        {
+          provide: 'ILoginUsecase',
+          useValue: { exec: jest.fn() },
+        },
+      ],
     }).compile();
 
     controller = module.get<AuthController>(AuthController);

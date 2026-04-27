@@ -8,6 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import { CreateUserTokenService } from './service/create-user-token/create-user-token.service';
 import { UsersModule } from 'src/users/users.module';
 import { LoginService } from './service/login/login.service';
+import { LoginUsecase } from './usecase/login.usecase';
 import { AuthUserRepository } from './repository/auth-user.repository';
 import { UserEntity } from './entity/user.entity';
 import { GenerateJwtRefreshTokenService } from './service/generate-jwt-refresh-token/generate-jwt-refresh-token.service';
@@ -55,6 +56,10 @@ const serviceProviders = [
   {
     provide: 'ILoginService',
     useClass: LoginService,
+  },
+  {
+    provide: 'ILoginUsecase',
+    useClass: LoginUsecase,
   },
 ];
 
